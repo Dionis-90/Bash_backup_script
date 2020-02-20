@@ -26,9 +26,9 @@ if you need to use SMB:
    SMBRESURS
 4. If you need to use ftp-client put .netrc to `/root` and set correct permissions
 
-   `chown root:root /root/.netrc && chmod 600 /root/.netrc`
+   `sudo chown root:root /root/.netrc && sudo chmod 600 /root/.netrc`
    
 5. Open .netrc in text-editor and set correct authentication data
 6. Add cron-task to root-crontab.
 
-`echo "0 2 * * *	root	/root/backup.sh 2>/dev/null" >> /etc/crontab`
+`sudo echo "0 2 * * *	root	/root/backup.sh 2>/dev/null" >> /etc/crontab`
