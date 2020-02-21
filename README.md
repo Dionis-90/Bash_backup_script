@@ -12,7 +12,7 @@ or if you need to use SMB
 sudo apt update && sudo apt install mailutils smbclient
 ```
 ## Usage
-1. Put this script to `/root` 
+1. Put backup.sh and backup.conf to `/root` 
 2. Open backup.conf on text-editor and using tips set the necessary settings.
 3. If you need to use ftp-client put .netrc to `/root` and set correct permissions
 
