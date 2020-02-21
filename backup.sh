@@ -1,7 +1,8 @@
 #!/bin/bash
 source backup.conf
 
-echo -e "$DATE $TIME\n--------------------------------------------------------------------------------------------" >> $BACKUPLOGPTH || echo "Can not to create log-file. Probably you run script with not enough permissions! Exiting..." && exit 1
+echo -e "$DATE $TIME\n--------------------------------------------------------------------------------------------" >> $BACKUPLOGPTH
+[ ! -f "$BACKUPLOGPTH" ] && echo "Can not to create log-file. Probably you run script with not enough permissions! Exiting..." && exit 1
 
 function error() {
 echo "Backup unsuccessful on `hostname`." | mail -s "Backup unsuccessful" $EMAIL -A $BACKUPLOGPTH
