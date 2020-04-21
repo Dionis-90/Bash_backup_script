@@ -1,5 +1,8 @@
 #!/bin/bash
 source backup.conf
+BACKUPLOGFILENAME="backup-${DATE}.log"
+BACKUPLOGPTH="$BACKUPLOGFOLDER$BACKUPLOGFILENAME"
+[ ! -d $BACKUPLOGFOLDER ] && echo "Backup-folder does not exist. Creating folder." && mkdir -p $BACKUPLOGFOLDER
 
 echo -e "$DATE $TIME\n--------------------------------------------------------------------------------------------" >> $BACKUPLOGPTH
 [ ! -f "$BACKUPLOGPTH" ] && echo "Can not to create log-file. Probably you run script with not enough permissions! Exiting..." && exit 1
@@ -8,6 +11,8 @@ function error() {
 echo "Backup unsuccessful on `hostname`." | mail -s "Backup unsuccessful" $EMAIL -A $BACKUPLOGPTH
 exit 1
 }
+
+find $BACKUPLOGFOLDER -maxdepth 1 -type f -mtime +$OLDLOGS -name 'backup*.log' -exec rm -f {} \; && echo "Searching and removing old log-files." >> $BACKUPLOGPTH
 
 [ "$CLIENT" -eq "1" ] && which ftp > /dev/null && REMOTE="ftp $FTPHOST" && echo "Using FTP." >> $BACKUPLOGPTH
 [ "$CLIENT" -eq "2" ] && which smbclient > /dev/null && REMOTE="smbclient -U $SMBUSER //$SMBHOST/$SMBRESURS $SMBPASS" && echo "Using SMB." >> $BACKUPLOGPTH
